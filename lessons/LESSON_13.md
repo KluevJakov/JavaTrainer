@@ -10,7 +10,7 @@
 **Что нужно сделать:**
 ```bash
 # 1. Подними PostgreSQL в Docker
-docker run --name pg-practice -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=admin -e POSTGRES_DB=testdb -p 5432:5432 -d postgres:16
+docker run --name pg-practice -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=testdb -p 5432:5432 -d postgres:16
 
 # 2. Подключись к базе
 docker exec -it pg-practice psql -U postgres -d testdb
@@ -43,7 +43,7 @@ public class JdbcConnectExample {
     public static void main(String[] args) {
         String url = "jdbc:postgresql://localhost:5432/testdb";
         String user = "postgres";
-        String password = "admin";
+        String password = "postgres";
 
         try (Connection conn = DriverManager.getConnection(url, user, password)) {
             System.out.println("✅ Подключение к PostgreSQL успешно!");
@@ -72,7 +72,7 @@ public class InsertExample {
         String sql = "INSERT INTO employees (name, department, salary) VALUES (?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/testdb", "postgres", "admin");
+                "jdbc:postgresql://localhost:5432/testdb", "postgres", "postgres");
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, "Иван Иванов");
@@ -98,7 +98,7 @@ public class SelectExample {
         String sql = "SELECT id, name, department, salary FROM employees";
 
         try (Connection conn = DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/testdb", "postgres", "admin");
+                "jdbc:postgresql://localhost:5432/testdb", "postgres", "postgres");
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
@@ -124,7 +124,7 @@ import java.sql.*;
 public class UpdateDeleteExample {
     public static void main(String[] args) throws SQLException {
         try (Connection conn = DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/testdb", "postgres", "admin")) {
+                "jdbc:postgresql://localhost:5432/testdb", "postgres", "postgres")) {
 
             // Обновление зарплаты
             PreparedStatement update = conn.prepareStatement(
@@ -155,7 +155,7 @@ import java.sql.*;
 public class TransactionExample {
     public static void main(String[] args) throws SQLException {
         try (Connection conn = DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/testdb", "postgres", "admin")) {
+                "jdbc:postgresql://localhost:5432/testdb", "postgres", "postgres")) {
 
             conn.setAutoCommit(false);
 
@@ -200,7 +200,7 @@ public class Employee {
 public class EmployeeDao {
     private static final String URL = "jdbc:postgresql://localhost:5432/testdb";
     private static final String USER = "postgres";
-    private static final String PASSWORD = "admin";
+    private static final String PASSWORD = "postgres";
 
     public List<Employee> getAll() throws SQLException {
         List<Employee> list = new ArrayList<>();
